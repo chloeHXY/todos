@@ -1,11 +1,12 @@
 import React,{useState} from "react";
 import tupian from "../tu.png"
 function Task(props){
-    const[newTaskname,setnewTaskname]=useState('');
+    const[newTaskname,setnewTaskname]=useState(props.name);
+
     function onsubmit(e){
         e.preventDefault();
         props.savename(props.id,newTaskname);
-        setnewTaskname('');
+        // setnewTaskname(props.name);
     }
     // const relax=<div className="begin">
     //     <img src={tupian} alt="图片">
@@ -13,7 +14,8 @@ function Task(props){
     //     栖栖一代，所欲为何？添加新任务前先思考思考吧
     // </div>
     const pre=<li>
-        <input type="checkbox" name="" id=""/>{props.name}
+        <input type="checkbox" name="" onChange={(e)=>{
+            props.ifChecked();}}/>{props.name}
         <button type="button" id="edit" onClick={()=>props.changeUI(props.id)}>
             &#xe600;
         </button>
@@ -37,3 +39,4 @@ function Task(props){
     );
 }
 export default Task;
+//setCheck(!check);checked={check},const[check,setCheck]=useState(false);

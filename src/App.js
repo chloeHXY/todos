@@ -5,21 +5,37 @@ import ReactDOM from 'react-dom';
 import Addform from "./components/Addform";
 import Task from "./components/Task";
 import Begin from "./components/Begin";
+import Switch from "./components/Switch";
 function App() {
+    // let switchButton;
+    const[switchButton,setswitchButton]=useState('All');
     const[tasks,settasks]=useState([]);
     const[backBegin,setbackBegin]=useState(true);
     function getName(name){
-        const newtask={name:name, id:"task"+nanoid(),ifEditing:false};
+        const newtask={name:name, id:"task"+nanoid(),ifEditing:false,checkState:false};
         setbackBegin(false);
         //现有手段，无法直接在父组件中获取到子组件的属性值
         //所以，直接子组件中的属性，主要是让子组件通过props调用获取
         //故不要让state变量含有组件，这样操作会变得复杂
         settasks([...tasks,newtask]);
     }
-    const compList=tasks.map((task)=>{
-        return <Task name={task.name} id={task.id} key={task.id} deleteTask={useDeleteTask} ifEditing={task.ifEditing} changeUI={changeUI} savename={savename} cancelWork={cancelWork} backBegin={backBegin}/>
+    const compList=tasks.filter((task)=>{
+        if(switchButton==="Active"){
+            return(task.checkState===false)
+        }
+        else if(switchButton==="Completed"){
+            return(task.checkState===true)
+        }
+        else return task
+        }
+    ).map((task)=>{
+        return <Task name={task.name} id={task.id} key={task.id} checkState={task.checkState} ifChecked={ifChecked} deleteTask={useDeleteTask} ifEditing={task.ifEditing} changeUI={changeUI} savename={savename} cancelWork={cancelWork} backBegin={backBegin}/>
     })
-
+    function ifChecked(){
+        settasks(tasks.map((task)=>{
+            return {name:task.name, id:task.id,ifEditing:task.ifEditing,checkState:!task.checkState};
+        }))
+    }
     function cancelWork(id){
         settasks(tasks.map((task)=>{
             if(task.id===id){return {name:task.name, id:task.id,ifEditing:!task.ifEditing};}
@@ -53,6 +69,9 @@ function App() {
         let con=tasks.length;
         if(--con===0){setbackBegin(true);}
     }
+    function switchName(name){
+        setswitchButton(name);
+    }
   return (
     <div className="App">
           <h1>TODO</h1>
@@ -62,6 +81,7 @@ function App() {
                 {backBegin?<Begin/>:compList}
             </ul>
         </div>
+        {backBegin?" ":<Switch switchName={switchName} taskNum={tasks.length}/>}
     </div>
   );
 }

@@ -22,6 +22,8 @@ li{
 }
 /*#61DAFB*/
 .App{
+  transform: scale(1);
+  position: relative;
   width: 632px;
   /*height: 700px;*/
   margin: 75px auto;
@@ -31,6 +33,7 @@ li{
   padding-bottom: 50px;
 }
 .begin{
+
   width: 400px;
   height: 400px;
   margin:0 auto;
@@ -127,4 +130,41 @@ input[type=text]{
 }
 button[disabled=true]{
   cursor: not-allowed;
+}
+.switch{
+  position: fixed;
+  /*position: sticky;*/
+  left: 0;
+  bottom: 0;
+  width: 632px;
+  height: 50px;
+  background-color: #152b5814;
+}
+.switch button{
+  border: 0;
+  font-size: 18px;
+  text-decoration: underline;
+  cursor: pointer;
+  background-color: transparent;
+}
+.switch em{
+  position: absolute;
+  font-size: 14px;
+  bottom: 0;
+  right: 9px;
+}
+button[name="All"]{
+  position: absolute;
+  top: 21px;
+  left: 143px;
+}
+button[name="Completed"]{
+  position: absolute;
+  top: 21px;
+  left: 261px;
+}
+button[name="Active"]{
+  position: absolute;
+  top: 21px;
+  right: 149px;
 }

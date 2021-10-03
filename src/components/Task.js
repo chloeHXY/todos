@@ -14,8 +14,8 @@ function Task(props){
     //     栖栖一代，所欲为何？添加新任务前先思考思考吧
     // </div>
     const pre=<li>
-        <input type="checkbox" name="" onChange={(e)=>{
-            props.ifChecked();}}/>{props.name}
+        <input type="checkbox" name="" checked={props.checkState} onChange={(e)=>{
+            props.ifChecked(props.id);}}/>{props.name}
         <button type="button" id="edit" onClick={()=>props.changeUI(props.id)}>
             &#xe600;
         </button>

@@ -12,6 +12,7 @@ function App() {
     const[tasks,settasks]=useState([]);
     const[backBegin,setbackBegin]=useState(true);
     function getName(name){
+        setswitchButton('All');
         const newtask={name:name, id:"task"+nanoid(),ifEditing:false,checkState:false};
         setbackBegin(false);
         //现有手段，无法直接在父组件中获取到子组件的属性值
@@ -31,9 +32,10 @@ function App() {
     ).map((task)=>{
         return <Task name={task.name} id={task.id} key={task.id} checkState={task.checkState} ifChecked={ifChecked} deleteTask={useDeleteTask} ifEditing={task.ifEditing} changeUI={changeUI} savename={savename} cancelWork={cancelWork} backBegin={backBegin}/>
     })
-    function ifChecked(){
+    function ifChecked(id){
         settasks(tasks.map((task)=>{
-            return {name:task.name, id:task.id,ifEditing:task.ifEditing,checkState:!task.checkState};
+            if(task.id===id){return {name:task.name, id:task.id,ifEditing:task.ifEditing,checkState:!task.checkState};}
+            else return task;
         }))
     }
     function cancelWork(id){
@@ -70,6 +72,7 @@ function App() {
         if(--con===0){setbackBegin(true);}
     }
     function switchName(name){
+        console.log(name);
         setswitchButton(name);
     }
   return (
